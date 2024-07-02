@@ -28,10 +28,8 @@
                         <div class="form-group">
                             <label for="role">Role</label>
                             <select class="form-control" id="role" name="role" required>
-                                <option value="">Select a role</option>
+                                <option value="user">User</option>
                                 <option value="admin">Admin</option>
-                                <option value="employer">Employer</option>
-                                <option value="jobseeker">Job Seeker</option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Register</button>

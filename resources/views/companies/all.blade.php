@@ -12,12 +12,14 @@
                 <td>{{ $company->location }}</td>
                 <td>
                     <a href="{{ route('companies.show', $company->id) }}" class="btn btn-info">View</a>
-                    <a href="{{ route('companies.edit', $company->id) }}" class="btn btn-warning">Edit</a>
-                    <form action="{{ route('companies.destroy', $company->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
+                    @if(Auth::user()->role === 'admin')
+                        <a href="{{ route('companies.edit', $company->id) }}" class="btn btn-warning">Edit</a>
+                        <form action="{{ route('companies.destroy', $company->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    @endif
                 </td>
             </tr>
             @endforeach

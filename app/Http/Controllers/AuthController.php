@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
-use Illuminate\Http\Request; // Import Illuminate\Http\Request
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -21,7 +21,12 @@ class AuthController extends Controller
             'role' => $request->role,
         ]);
 
-        return response()->json(['message' => 'User registered successfully'], 201);
+        // Redirect based on role
+        if ($request->role === 'admin') {
+            return redirect()->route('companies.create')->with('success', 'User registered as admin. You can now create companies.');
+        } else {
+            return redirect()->route('login')->with('success', 'User registered successfully. Please login.');
+        }
     }
 
     public function login(LoginRequest $request)
@@ -32,7 +37,7 @@ class AuthController extends Controller
             $user = Auth::user();
             $token = $user->createToken('auth_token')->plainTextToken;
 
-            return response()->json(['message' => 'Login successful', 'token' => $token], 200);
+            return redirect()->route('home')->with('success', 'Login successful.');
         }
 
         throw ValidationException::withMessages([
@@ -45,9 +50,8 @@ class AuthController extends Controller
         Auth::logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
-        return response()->json(['message' => 'Logged out successfully']);
+        return redirect()->route('home')->with('success', 'Logged out successfully.');
     }
 }

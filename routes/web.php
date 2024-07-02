@@ -38,16 +38,22 @@ Route::middleware('auth')->group(function () {
 });
 
 // Routes for companies
-Route::get('/companies', [CompanyController::class, 'index'])->name('companies.index');
-Route::middleware('auth')->group(function () {
+
+
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/companies', [CompanyController::class, 'index'])->name('companies.index');
     Route::get('/companies/create', [CompanyController::class, 'create'])->name('companies.create');
     Route::post('/companies', [CompanyController::class, 'store'])->name('companies.store');
     Route::get('/companies/{company}', [CompanyController::class, 'show'])->name('companies.show');
     Route::get('/companies/{company}/edit', [CompanyController::class, 'edit'])->name('companies.edit');
     Route::put('/companies/{company}', [CompanyController::class, 'update'])->name('companies.update');
     Route::delete('/companies/{company}', [CompanyController::class, 'destroy'])->name('companies.destroy');
-    Route::get('/companies/all', [CompanyController::class, 'showAll'])->name('companies.all');
+     Route::get('/companies/all', [CompanyController::class, 'showAll'])->name('companies.all');
 });
+
+
 
 // Routes for categories
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
