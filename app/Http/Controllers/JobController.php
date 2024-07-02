@@ -3,27 +3,32 @@
 namespace App\Http\Controllers;
 
 use App\Models\Job;
-use App\Models\Company;
-use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JobController extends Controller
 {
     public function index()
     {
-        $jobs = Job::with(['company', 'category'])->paginate(10);
+        $jobs = Job::paginate(10);
         return view('jobs.index', compact('jobs'));
     }
 
     public function create()
     {
-        $companies = Company::all();
-        $categories = Category::all();
-        return view('jobs.create', compact('companies', 'categories'));
+        if (Auth::user()->role !== 'admin') {
+            return redirect()->route('jobs.index')->with('error', 'You are not authorized to create a job.');
+        }
+
+        return view('jobs.create');
     }
 
     public function store(Request $request)
     {
+        if (Auth::user()->role !== 'admin') {
+            return redirect()->route('jobs.index')->with('error', 'You are not authorized to create a job.');
+        }
+
         $request->validate([
             'title' => 'required',
             'description' => 'required',
@@ -46,13 +51,19 @@ class JobController extends Controller
 
     public function edit(Job $job)
     {
-        $companies = Company::all();
-        $categories = Category::all();
-        return view('jobs.edit', compact('job', 'companies', 'categories'));
+        if (Auth::user()->role !== 'admin') {
+            return redirect()->route('jobs.index')->with('error', 'You are not authorized to edit this job.');
+        }
+
+        return view('jobs.edit', compact('job'));
     }
 
     public function update(Request $request, Job $job)
     {
+        if (Auth::user()->role !== 'admin') {
+            return redirect()->route('jobs.index')->with('error', 'You are not authorized to update this job.');
+        }
+
         $request->validate([
             'title' => 'required',
             'description' => 'required',
@@ -70,27 +81,12 @@ class JobController extends Controller
 
     public function destroy(Job $job)
     {
+        if (Auth::user()->role !== 'admin') {
+            return redirect()->route('jobs.index')->with('error', 'You are not authorized to delete this job.');
+        }
+
         $job->delete();
+
         return redirect()->route('jobs.index')->with('success', 'Job deleted successfully.');
-    }
-
-    public function search(Request $request)
-    {
-        $query = Job::query();
-
-        if ($request->has('title')) {
-            $query->where('title', 'like', '%' . $request->title . '%');
-        }
-
-        if ($request->has('company_id')) {
-            $query->where('company_id', $request->company_id);
-        }
-
-        if ($request->has('category_id')) {
-            $query->where('category_id', $request->category_id);
-        }
-
-        $jobs = $query->with(['company', 'category'])->paginate(10);
-        return view('jobs.index', compact('jobs'));
     }
 }

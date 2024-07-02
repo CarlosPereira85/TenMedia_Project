@@ -1,16 +1,15 @@
+<!-- resources/views/jobs/all.blade.php -->
 @extends('layouts.app')
 
 @section('content')
 <div class="container">
     <h1>All Jobs</h1>
-    @if(Auth::user()->role === 'admin')
-        <a href="{{ route('jobs.create') }}" class="btn btn-primary">Create New Job</a>
-    @endif
-    <table class="table mt-3">
+    <table class="table">
         <thead>
             <tr>
                 <th>Title</th>
-                <th>Location</th>
+                <th>Description</th>
+                <th>Category</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -18,7 +17,8 @@
             @foreach($jobs as $job)
             <tr>
                 <td>{{ $job->title }}</td>
-                <td>{{ $job->location }}</td>
+                <td>{{ $job->description }}</td>
+                <td>{{ $job->category->name }}</td>
                 <td>
                     <a href="{{ route('jobs.show', $job->id) }}" class="btn btn-info">View</a>
                     @if(Auth::user()->role === 'admin')
@@ -34,6 +34,5 @@
             @endforeach
         </tbody>
     </table>
-    {{ $jobs->links() }}
 </div>
 @endsection

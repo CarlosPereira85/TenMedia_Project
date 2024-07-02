@@ -26,23 +26,33 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Routes for jobs
-Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
+    // Jobs routes
+    Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
     Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create');
     Route::post('/jobs', [JobController::class, 'store'])->name('jobs.store');
     Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
     Route::get('/jobs/{job}/edit', [JobController::class, 'edit'])->name('jobs.edit');
     Route::put('/jobs/{job}', [JobController::class, 'update'])->name('jobs.update');
     Route::delete('/jobs/{job}', [JobController::class, 'destroy'])->name('jobs.destroy');
-    Route::get('/jobs/search', [JobController::class, 'search'])->name('jobs.search');
-});
+    Route::get('/jobs/all', [JobController::class, 'showAll'])->name('jobs.all');
+
+    // Categories routes
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
+    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+    Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
+    Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
+    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+    Route::get('/categories/all', [CategoryController::class, 'showAll'])->name('categories.all');
 
 // Routes for companies
 
 
 
 
-Route::middleware(['auth'])->group(function () {
+
     Route::get('/companies', [CompanyController::class, 'index'])->name('companies.index');
     Route::get('/companies/create', [CompanyController::class, 'create'])->name('companies.create');
     Route::post('/companies', [CompanyController::class, 'store'])->name('companies.store');
@@ -55,16 +65,6 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-// Routes for categories
-Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
-Route::middleware('auth')->group(function () {
-    Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
-    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
-    Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
-    Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
-    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
-    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
-});
 
 // Routes for users (assuming standard Laravel Auth)
 Route::middleware('auth')->group(function () {
