@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Job;
+use App\Models\Application; // Ensure Application model is imported
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -90,25 +91,37 @@ class JobController extends Controller
         return redirect()->route('jobs.index')->with('success', 'Job deleted successfully.');
     }
 
-    public function applyForm(Request $request)
+    public function applyForm(Job $job)
     {
-        $jobDetails = $request->query(); // Retrieve job details from query parameters
-
-        // You can also load companies and categories here if needed
-
-        return view('jobs.apply', compact('jobDetails'));
+        // Display the apply form for the job
+        return view('jobs.apply', compact('job'));
     }
 
     public function apply(Request $request, Job $job)
     {
         $request->validate([
-            'resume' => 'required|mimes:pdf,doc,docx', // Example validation for resume file
+            'resume' => 'required|mimes:pdf,doc,docx',
             'cover_letter' => 'required',
         ]);
 
-        // Process application submission (save to database, send email, etc.)
-        // Example: Save application details to a database table
+        $user = Auth::user(); // Get the authenticated user
 
-        return redirect()->back()->with('success', 'Application submitted successfully.');
+        // Store application with user_id and job_id
+        $application = new Application();
+        $application->user_id = $user->id;
+        $application->job_id = $job->id;
+        $application->resume = $request->file('resume')->store('resumes'); // Example storage path
+        $application->cover_letter = $request->input('cover_letter');
+        $application->save();
+
+        return redirect()->route('jobs.show', $job->id)->with('success', 'Application submitted successfully.');
+    }
+
+    public function userAppliedJobs()
+    {
+        $user = Auth::user();
+        $appliedJobs = $user->applications()->with('job')->paginate(10);
+
+        return view('users.home', compact('appliedJobs'));
     }
 }

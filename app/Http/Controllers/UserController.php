@@ -27,4 +27,31 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+  
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = Hash::make($password);
+    }
+
+     /**
+     * Delete the authenticated user's account.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteAccount()
+    {
+        $user = Auth::user();
+
+        // Optionally, logout the user first
+        Auth::logout();
+
+        // Delete the user account
+        $user->delete();
+
+        return redirect('/')->with('success', 'Your account has been deleted.');
+    }
 }
+
+

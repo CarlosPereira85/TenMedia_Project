@@ -34,15 +34,30 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/home', [UserHomeController::class, 'index'])->name('user.home');
 
 
+
+    // Password update
+    Route::post('/update-password', [UserController::class, 'updatePassword'])->name('update.password');
+
+    // Delete account
+    Route::post('/delete-account', [UserController::class, 'deleteAccount'])->name('delete.account');
+    
+
+
     // Jobs routes
-    Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
-    Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create');
-    Route::post('/jobs', [JobController::class, 'store'])->name('jobs.store');
-    Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
-    Route::get('/jobs/{job}/edit', [JobController::class, 'edit'])->name('jobs.edit');
-    Route::put('/jobs/{job}', [JobController::class, 'update'])->name('jobs.update');
-    Route::delete('/jobs/{job}', [JobController::class, 'destroy'])->name('jobs.destroy');
-    Route::get('/jobs/all', [JobController::class, 'showAll'])->name('jobs.all');
+    // routes/web.php
+
+
+
+Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
+Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create');
+Route::post('/jobs', [JobController::class, 'store'])->name('jobs.store');
+Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
+Route::get('/jobs/{job}/edit', [JobController::class, 'edit'])->name('jobs.edit');
+Route::put('/jobs/{job}', [JobController::class, 'update'])->name('jobs.update');
+Route::delete('/jobs/{job}', [JobController::class, 'destroy'])->name('jobs.destroy');
+Route::get('/jobs/{job}/apply', [JobController::class, 'applyForm'])->name('jobs.apply');
+Route::post('/jobs/{job}/apply', [JobController::class, 'apply'])->name('jobs.apply.submit');
+
 
 
     // Categories routes

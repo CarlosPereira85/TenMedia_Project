@@ -24,7 +24,10 @@ class UserHomeController extends Controller
         // Fetch authenticated user
         $user = auth()->user();
 
-        // Example: Passing user data to the view
-        return view('users.home', compact('user'));
+        // Fetch the user's applications
+        $applications = $user->applications()->with('job')->get();
+
+        // Pass user and applications data to the view
+        return view('users.home', compact('user', 'applications'));
     }
 }
