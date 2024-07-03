@@ -89,4 +89,26 @@ class JobController extends Controller
 
         return redirect()->route('jobs.index')->with('success', 'Job deleted successfully.');
     }
+
+    public function applyForm(Request $request)
+    {
+        $jobDetails = $request->query(); // Retrieve job details from query parameters
+
+        // You can also load companies and categories here if needed
+
+        return view('jobs.apply', compact('jobDetails'));
+    }
+
+    public function apply(Request $request, Job $job)
+    {
+        $request->validate([
+            'resume' => 'required|mimes:pdf,doc,docx', // Example validation for resume file
+            'cover_letter' => 'required',
+        ]);
+
+        // Process application submission (save to database, send email, etc.)
+        // Example: Save application details to a database table
+
+        return redirect()->back()->with('success', 'Application submitted successfully.');
+    }
 }

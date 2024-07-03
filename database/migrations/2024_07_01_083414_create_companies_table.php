@@ -17,6 +17,7 @@ class CreateCompaniesTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('location');
+            $table->string('image_path')->nullable();
            
         });
     }

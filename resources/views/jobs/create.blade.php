@@ -41,7 +41,26 @@
                 @endforeach
             </select>
         </div>
+        <!-- Add Apply button -->
+        <button type="button" class="btn btn-success" onclick="openApplyWindow()">Apply</button>
         <button type="submit" class="btn btn-primary">Create Job</button>
     </form>
 </div>
+
+<!-- JavaScript function to open Apply window -->
+<script>
+function openApplyWindow() {
+    let jobTitle = document.getElementById('title').value;
+    let jobDescription = document.getElementById('description').value;
+    let jobRequirements = document.getElementById('requirements').value;
+    let jobSalary = document.getElementById('salary').value;
+    let jobLocation = document.getElementById('location').value;
+    let companyId = document.getElementById('company_id').value;
+    let categoryId = document.getElementById('category_id').value;
+
+    // Open new window with apply form
+    let url = `{{ route("jobs.applyForm") }}?title=${jobTitle}&description=${jobDescription}&requirements=${jobRequirements}&salary=${jobSalary}&location=${jobLocation}&company_id=${companyId}&category_id=${categoryId}`;
+    window.open(url, '_blank');
+}
+</script>
 @endsection

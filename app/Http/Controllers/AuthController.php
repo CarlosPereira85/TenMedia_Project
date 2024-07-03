@@ -37,7 +37,7 @@ class AuthController extends Controller
             $user = Auth::user();
             $token = $user->createToken('auth_token')->plainTextToken;
 
-            return redirect()->route('home')->with('success', 'Login successful.');
+            return redirect()->route('user.home')->with('success', 'Login successful.');
         }
 
         throw ValidationException::withMessages([

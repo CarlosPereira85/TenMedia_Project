@@ -12,7 +12,7 @@
                             {{ session('error') }}
                         </div>
                     @endif
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('login') }}" id="loginForm">
                         @csrf
                         <div class="form-group">
                             <label for="email">Email</label>
@@ -24,6 +24,9 @@
                         </div>
                         <button type="submit" class="btn btn-primary">Login</button>
                     </form>
+                    <div class="mt-3">
+                        <a href="{{ url('/home') }}" class="btn btn-secondary">Back</a>
+                    </div>
                 </div>
             </div>
         </div>

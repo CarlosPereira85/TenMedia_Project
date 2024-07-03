@@ -6,6 +6,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserHomeController;
 
 // Welcome page
 Route::get('/', function () {
@@ -25,8 +26,14 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+
+
 // Routes for jobs
 Route::middleware(['auth'])->group(function () {
+
+    Route::get('/home', [UserHomeController::class, 'index'])->name('users.home');
+
+
     // Jobs routes
     Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
     Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create');
@@ -36,6 +43,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/jobs/{job}', [JobController::class, 'update'])->name('jobs.update');
     Route::delete('/jobs/{job}', [JobController::class, 'destroy'])->name('jobs.destroy');
     Route::get('/jobs/all', [JobController::class, 'showAll'])->name('jobs.all');
+
 
     // Categories routes
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
