@@ -31,7 +31,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Routes for jobs
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/home', [UserHomeController::class, 'index'])->name('users.home');
+    Route::get('/home', [UserHomeController::class, 'index'])->name('user.home');
 
 
     // Jobs routes
