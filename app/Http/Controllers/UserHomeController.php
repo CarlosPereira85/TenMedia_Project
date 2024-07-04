@@ -1,7 +1,5 @@
 <?php
 
-// File: app/Http/Controllers/UserHomeController.php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -29,5 +27,24 @@ class UserHomeController extends Controller
 
         // Pass user and applications data to the view
         return view('users.home', compact('user', 'applications'));
+    }
+
+    /**
+     * Delete the authenticated user's account.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteAccount()
+    {
+        // Fetch authenticated user
+        $user = Auth::user();
+
+        // Optionally, logout the user first
+        Auth::logout();
+
+        // Delete the user account
+        $user->delete();
+
+        return redirect('/')->with('success', 'Your account has been deleted.');
     }
 }
