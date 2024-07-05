@@ -1,0 +1,113 @@
+/* General Styles */
+
+
+/* Card Styles */
+.card {
+    margin-top: 20px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+
+.display-flex li {
+    display: flex;
+   gap: 10px;
+   
+    flex-direction: column;
+
+}
+.card-header {
+    background-color: #007bff;
+    color: #fff;
+    border-bottom: none;
+    padding: 15px 20px;
+    font-size: 20px;
+    font-weight: bold;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-body p {
+    margin-bottom: 15px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.card-body h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.card-body ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.card-body li {
+    background-color: #e9ecef;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.card-body li strong {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.card-body a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.card-body a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* Button Styles */
+.btn-danger {
+    background-color: #e3342f;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-danger:hover {
+    background-color: #cc1f1a;
+    transform: translateY(-2px);
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    position: relative;
+}
+
+form button {
+    position: absolute;
+    right: 3%;
+    top: 50%;
+    transform: translateY(-50%);
+}
