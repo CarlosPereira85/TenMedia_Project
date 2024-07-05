@@ -34,6 +34,15 @@
                         @csrf
                     </form>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link text-danger" href="{{ route('delete.account') }}"
+                       onclick="event.preventDefault(); if(confirm('Are you sure you want to delete your account? This action cannot be undone.')) document.getElementById('delete-account-form').submit();">
+                        Delete Account
+                    </a>
+                    <form id="delete-account-form" action="{{ route('delete.account') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </li>
             @endguest
         </ul>
     </div>
